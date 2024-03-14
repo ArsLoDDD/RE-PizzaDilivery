@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IChoseItemPizzaCreate } from '../../components/Main/CreatePizzaContent/CreatePizzaContentFrstStep/CreatePizzaSize/CreatePizzaSize'
+import { addCustomPizzaToCart, addToCart } from './cartSlice'
 
 export enum SizeValue {
 	NULL = 0,
@@ -12,6 +13,11 @@ export enum SizeValue {
 export enum CrustValue {
 	CLASSIC = 'Classic',
 	ITALIAN = 'Italian',
+}
+
+export enum CrustPrice {
+	CLASSIC = 0,
+	ITALIAN = 20,
 }
 
 export enum ToppingStyle {
@@ -46,14 +52,19 @@ export interface ICreatePizzaOrder {
 		size: {
 			sizeValue: SizeValue
 			sizePrice: number
+			sizeName: string
 		}
 		crust: {
 			crustValue: CrustValue
-			crustPrice: number
+			crustPrice: CrustPrice
 		}
 		toppingStyle: ToppingStyle
 		leftSideToppings?: ToppingSide
-		// rightSideToppings?: ToppingSide
+		rightSideToppings?: ToppingSide
+		toppingCount: number
+		mainIngredientsPrice: number
+		otherToppingPriceLeft: number
+		otherToppingPriceRight: number
 	}
 }
 
@@ -62,12 +73,17 @@ const initialState: ICreatePizzaOrder = {
 		size: {
 			sizeValue: SizeValue.EXTRA_SMALL,
 			sizePrice: 55.99,
+			sizeName: '7 inch',
 		},
 		crust: {
 			crustValue: CrustValue.CLASSIC,
-			crustPrice: 0,
+			crustPrice: CrustPrice.CLASSIC,
 		},
 		toppingStyle: ToppingStyle.FIRST,
+		toppingCount: 0,
+		mainIngredientsPrice: 0,
+		otherToppingPriceLeft: 0,
+		otherToppingPriceRight: 0,
 	},
 }
 
@@ -76,27 +92,45 @@ const createPizzaSlice = createSlice({
 	initialState,
 	reducers: {
 		setSize: (state, action: PayloadAction<SizeValue>) => {
+			console.log(action.payload)
 			state.createdPizza.size.sizeValue = action.payload
 			state.createdPizza.size.sizePrice = action.payload
+			state.createdPizza.mainIngredientsPrice +=
+				state.createdPizza.size.sizePrice
+		},
+		setSizeName: (state, action: PayloadAction<string>) => {
+			state.createdPizza.size.sizeName = action.payload
 		},
 		setCrust: (state, action: PayloadAction<CrustValue>) => {
 			state.createdPizza.crust.crustValue = action.payload
+			if (action.payload === CrustValue.ITALIAN) {
+				state.createdPizza.crust.crustPrice = CrustPrice.ITALIAN
+				state.createdPizza.mainIngredientsPrice += CrustPrice.ITALIAN
+			}
 		},
 		setToppingStyle: (state, action: PayloadAction<ToppingStyle>) => {
 			state.createdPizza.toppingStyle = action.payload
-			console.log(
-				'state.createdPizza.toppingStyle',
-				state.createdPizza.toppingStyle
-			)
-		},
-		postOrder: state => {
-			console.log('postOrder', state.createdPizza)
 		},
 		clearCreatedPizza: state => {
 			state.createdPizza = initialState.createdPizza
 		},
-		setLeftSideToppings: (state, action: PayloadAction<ToppingSide>) => {
+		setLeftSideToppingsState: (state, action: PayloadAction<ToppingSide>) => {
 			state.createdPizza.leftSideToppings = action.payload
+			state.createdPizza.otherToppingPriceLeft = action.payload.toppings.reduce(
+				(acc, topping) => {
+					return acc + topping.value
+				},
+				0
+			)
+			state.createdPizza.toppingCount = action.payload.toppings.length
+		},
+		setRightSideToppingsState: (state, action: PayloadAction<ToppingSide>) => {
+			state.createdPizza.rightSideToppings = action.payload
+			state.createdPizza.otherToppingPriceRight =
+				action.payload.toppings.reduce((acc, topping) => {
+					return acc + topping.value
+				}, 0)
+			state.createdPizza.toppingCount = action.payload.toppings.length
 		},
 	},
 })
@@ -106,6 +140,8 @@ export const {
 	setCrust,
 	setToppingStyle,
 	clearCreatedPizza,
-	postOrder,
+	setLeftSideToppingsState,
+	setRightSideToppingsState,
+	setSizeName,
 } = createPizzaSlice.actions
 export default createPizzaSlice.reducer

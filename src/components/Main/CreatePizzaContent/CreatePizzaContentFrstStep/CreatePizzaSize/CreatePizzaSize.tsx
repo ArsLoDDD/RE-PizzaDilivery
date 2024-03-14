@@ -8,6 +8,7 @@ import {
 	SauceValue,
 	SizeValue,
 	setSize,
+	setSizeName,
 } from '../../../../../redux/slices/createPizzaSlice'
 import { ToppingPrice } from '../../CreatePizzaContentScdStep/CreatePizzaSauce/CreatePizzaSauce'
 
@@ -22,25 +23,25 @@ const sizes: IChoseItemPizzaCreate[] = [
 		id: 1,
 		name: '7 inch',
 		value: SizeValue.EXTRA_SMALL,
-		price: 55.99,
+		price: 55,
 	},
 	{
 		id: 2,
 		name: '9.5 inch',
 		value: SizeValue.SMALL,
-		price: 75.99,
+		price: 75,
 	},
 	{
 		id: 3,
 		name: '11.5 inch',
 		value: SizeValue.MEDIUM,
-		price: 95.99,
+		price: 99,
 	},
 	{
 		id: 4,
 		name: '13.5 inch',
 		value: SizeValue.LARGE,
-		price: 115.99,
+		price: 115,
 	},
 ]
 
@@ -52,7 +53,8 @@ const CreatePizzaSize: React.FC = ({}) => {
 	const handleChoseItem = (item: IChoseItemPizzaCreate | IToppingStyle) => {
 		if ('value' in item) {
 			setCurrentSize(item)
-			dispatch(setSize(item.value as SizeValue))
+			dispatch(setSize(item.price))
+			dispatch(setSizeName(item.name))
 		}
 	}
 	return (

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IPizza } from '../../types/pizzaTypes'
 
+
 export type PizzaFilterKey = keyof IPizza
 
 interface IMenusState {
@@ -16,6 +17,7 @@ const initialState: IMenusState = {
 	initialPizzasArray: [],
 	currentPizzasArray: [],
 }
+
 
 const menusSlice = createSlice({
 	name: 'menus',

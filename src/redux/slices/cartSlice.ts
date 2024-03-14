@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IPizza } from '../../types/pizzaTypes'
 import { data } from '../../apis/DB/pizzasData'
+import { ICreatePizzaOrder } from './createPizzaSlice'
 
 export interface cartItem {
 	data: IPizza
@@ -9,12 +10,14 @@ export interface cartItem {
 
 interface ICartState {
 	cartItems: cartItem[]
+	customPizzas: ICreatePizzaOrder[]
 	cartItemsCount: number
 	cartPriceTotal: number
 }
 
 const initialState: ICartState = {
 	cartItems: [],
+	customPizzas: [],
 	cartItemsCount: 0,
 	cartPriceTotal: 0,
 }
@@ -39,6 +42,14 @@ const cartSlice = createSlice({
 			}
 			state.cartItemsCount++
 			state.cartPriceTotal += action.payload.price
+		},
+		addCustomPizzaToCart: (state, action: PayloadAction<ICreatePizzaOrder>) => {
+			state.customPizzas.push(action.payload)
+			state.cartItemsCount++
+			state.cartPriceTotal +=
+				action.payload.createdPizza.mainIngredientsPrice +
+				action.payload.createdPizza.otherToppingPriceLeft +
+				action.payload.createdPizza.otherToppingPriceRight
 		},
 		decrementItem: (state, action: PayloadAction<number>) => {
 			const index = state.cartItems.findIndex(
@@ -71,7 +82,7 @@ const cartSlice = createSlice({
 				}
 			})
 			const order = {
-				orderItems: pizzaArray,
+				orderItems: [pizzaArray, ...state.customPizzas],
 				orderTotalPrice: state.cartPriceTotal,
 			}
 			console.log('Order sent', order)
@@ -82,6 +93,12 @@ const cartSlice = createSlice({
 	},
 })
 
-export const { clearCart, addToCart, incrementItem, decrementItem, sendOrder } =
-	cartSlice.actions
+export const {
+	clearCart,
+	addToCart,
+	incrementItem,
+	decrementItem,
+	sendOrder,
+	addCustomPizzaToCart,
+} = cartSlice.actions
 export default cartSlice.reducer

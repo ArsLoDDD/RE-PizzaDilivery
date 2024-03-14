@@ -15,6 +15,7 @@ interface CreatePizzaChoseBlockProps {
 	array: CreatePizzaChoseBlockTypes[]
 	size: CreatePizzaChoseItemSizeEnum
 	itemTypeChose: string
+	customBoxStyle?: any
 }
 const CreatePizzaChoseBlock: React.FC<CreatePizzaChoseBlockProps> = ({
 	currentItem,
@@ -22,12 +23,15 @@ const CreatePizzaChoseBlock: React.FC<CreatePizzaChoseBlockProps> = ({
 	array,
 	size,
 	itemTypeChose,
+	customBoxStyle,
 }) => {
 	return (
 		<View
-			style={{
-				marginBottom: 15,
-			}}
+			style={[
+				{
+					marginBottom: 15,
+				},
+			]}
 		>
 			<Text
 				style={{
@@ -39,7 +43,7 @@ const CreatePizzaChoseBlock: React.FC<CreatePizzaChoseBlockProps> = ({
 			>
 				{itemTypeChose}
 			</Text>
-			<View style={styles.containerSize}>
+			<View style={[styles.containerSize, customBoxStyle]}>
 				{array.map(item => {
 					const isCurrent = Array.isArray(currentItem)
 						? currentItem.some(ci => ci.id === item.id)
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		rowGap: 20,
+		rowGap: 30,
 		justifyContent: 'space-between',
 	},
 })

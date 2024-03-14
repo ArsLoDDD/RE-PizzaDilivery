@@ -13,11 +13,16 @@ import CartListEmpty from '../components/Main/CartList/CartListEmpty/CartListEmp
 import CartListItem from '../components/Main/CartList/CartListItem/CartListItem'
 import { useDispatch } from 'react-redux'
 import { sendOrder } from '../redux/slices/cartSlice'
+import CartListCustomPizzaItem from '../components/Main/CartList/CartListItem/CartListCustomPizzaItem/CartListCustomPizzaItem'
 
 const CartPage: React.FC = (): JSX.Element => {
 	const cartItems = useSelector((state: RootState) => state.cart.cartItems)
+	const customPizzas = useSelector(
+		(state: RootState) => state.cart.customPizzas
+	)
 	const dispatch = useDispatch()
-	if (cartItems.length === 0) return <CartListEmpty />
+	if (cartItems.length === 0 && customPizzas.length === 0)
+		return <CartListEmpty />
 
 	return (
 		<ScrollView
@@ -31,6 +36,9 @@ const CartPage: React.FC = (): JSX.Element => {
 		>
 			{cartItems.map((item, index) => (
 				<CartListItem key={index} item={item} />
+			))}
+			{customPizzas.map((item, index) => (
+				<CartListCustomPizzaItem key={index} data={item} />
 			))}
 			<Pressable
 				onPress={() => dispatch(sendOrder())}

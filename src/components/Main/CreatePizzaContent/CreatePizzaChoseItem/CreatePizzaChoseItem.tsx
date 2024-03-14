@@ -35,6 +35,7 @@ const CreatePizzaChoseItem: React.FC<CreatePizzaChoseItemProps> = ({
 	isToppingStyle = false,
 	height,
 }) => {
+
 	return (
 		<Pressable
 			onPress={() => onClick(item)}
@@ -43,8 +44,15 @@ const CreatePizzaChoseItem: React.FC<CreatePizzaChoseItemProps> = ({
 				{
 					width: size,
 					height: height && height,
-					borderWidth: currentItem?.id === item.id ? 2 : 0,
-					borderColor: orangeGradient,
+					borderWidth: 2,
+
+					borderColor: Array.isArray(currentItem)
+						? currentItem.some(ci => ci.id === item.id)
+							? orangeGradient
+							: '#f6f3f1'
+						: currentItem?.id === item.id
+						? orangeGradient
+						: '#f6f3f1',
 					borderRadius: radius,
 					paddingVertical: isToppingStyle ? 20 : 15,
 					backgroundColor: pressed ? '#00000010' : 'white',

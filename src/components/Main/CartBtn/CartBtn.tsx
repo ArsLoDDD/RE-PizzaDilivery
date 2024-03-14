@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-native'
+import CartBtnContent from './CartBtnContent/CartBtnContent'
 
 const CartBtn: React.FC = () => {
 	const cartItemsCount = useSelector(
@@ -66,25 +67,10 @@ const CartBtn: React.FC = () => {
 					},
 				]}
 			>
-				<Text numberOfLines={1} ellipsizeMode='tail' style={styles.cartBtnText}>
-					₴{cartPriceTotal}
-				</Text>
-				<View>
-					<View style={styles.cartCountItems}>
-						<Text
-							style={{
-								color: 'white',
-								fontWeight: 'bold',
-							}}
-						>
-							{cartItemsCount}
-						</Text>
-					</View>
-					<Image
-						style={styles.cartBtnImg}
-						source={require('../../../../assets/icons/pizza.png')}
-					/>
-				</View>
+				<CartBtnContent
+					cartItemsCount={cartItemsCount}
+					cartPriceTotal={cartPriceTotal}
+				/>
 			</Animated.View>
 		</Link>
 	)

@@ -4,7 +4,6 @@ import CreatePizzaCrust from './CreatePizzaCrust/CreatePizzaCrust'
 import CreatePizzaToppingStyle from './CreatePizzaToppingStyle/CreatePizzaToppingStyle'
 import { orangeGradient } from '../../../../utils/constants'
 import { useDispatch } from 'react-redux'
-import { postOrder } from '../../../../redux/slices/createPizzaSlice'
 
 interface CreatePizzaContentFrstStepProps {
 	setStep: (step: number) => void
@@ -12,7 +11,6 @@ interface CreatePizzaContentFrstStepProps {
 const CreatePizzaContentFrstStep: React.FC<CreatePizzaContentFrstStepProps> = ({
 	setStep,
 }) => {
-	const dispatch = useDispatch()
 	return (
 		<View style={styles.innerContent}>
 			<Text style={[styles.titletext, styles.marginBottom]}>
@@ -26,14 +24,13 @@ const CreatePizzaContentFrstStep: React.FC<CreatePizzaContentFrstStepProps> = ({
 				individual toppings
 			</Text>
 			<Text style={[styles.secondDescriptionText, styles.lineHeight]}>
-				You can choose upto 4 FREE toppins and 4 Extra toppings for ₴15 each
+				Extra toppings for ₴15 each
 			</Text>
 			<CreatePizzaSize />
 			<CreatePizzaCrust />
 			<CreatePizzaToppingStyle />
 			<Pressable
 				onPress={() => {
-					dispatch(postOrder())
 					setStep(2)
 				}}
 				style={({ pressed }) => [

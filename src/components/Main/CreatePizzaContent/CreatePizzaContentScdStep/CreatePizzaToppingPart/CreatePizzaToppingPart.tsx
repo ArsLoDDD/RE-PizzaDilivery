@@ -17,7 +17,6 @@ const CreatePizzaToppingPart: React.FC<CreatePizzaToppingPartProps> = ({
 			<View
 				style={{
 					marginBottom: 15,
-					backgroundColor: 'white',
 				}}
 			>
 				<Text

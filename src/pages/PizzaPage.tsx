@@ -66,7 +66,6 @@ const addToPizzaOrder: IPizza[] = [
 const PizzaPage: React.FC = () => {
 	const location = useLocation()
 	const { data } = location.state
-	console.log(data)
 	return (
 		<ScrollView
 			style={styles.container}

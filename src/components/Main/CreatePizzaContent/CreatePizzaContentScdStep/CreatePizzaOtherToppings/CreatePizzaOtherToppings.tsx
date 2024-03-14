@@ -129,6 +129,7 @@ const CreatePizzaOtherToppings: React.FC<CreatePizzaSauceProps> = ({
 			}
 			onClick={handleChoseItem}
 			size={CreatePizzaChoseItemSizeEnum.MEDIUM}
+			customBoxStyle={{ }}
 		/>
 	)
 }
