@@ -48,9 +48,10 @@ const cartSlice = createSlice({
 			state.customPizzas.push(action.payload)
 			state.cartItemsCount++
 			state.cartPriceTotal +=
-				action.payload.createdPizza.mainIngredientsPrice +
 				action.payload.createdPizza.otherToppingPriceLeft +
 				action.payload.createdPizza.otherToppingPriceRight
+			action.payload.createdPizza.crust.crustPrice +
+				action.payload.createdPizza.size.sizePrice
 		},
 		decrementItem: (state, action: PayloadAction<number>) => {
 			const index = state.cartItems.findIndex(

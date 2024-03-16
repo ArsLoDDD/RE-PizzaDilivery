@@ -40,8 +40,11 @@ const CreatePizzaContentSecondStep: React.FC = () => {
 	const otherToppingPriceRight = useSelector(
 		(state: RootState) => state.createdPizza.createdPizza.otherToppingPriceRight
 	)
-	const mainIngredientsPrice = useSelector(
-		(state: RootState) => state.createdPizza.createdPizza.mainIngredientsPrice
+	const crustPrice = useSelector(
+		(state: RootState) => state.createdPizza.createdPizza.crust.crustPrice
+	)
+	const sizePrice = useSelector(
+		(state: RootState) => state.createdPizza.createdPizza.size.sizePrice
 	)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
@@ -137,7 +140,8 @@ const CreatePizzaContentSecondStep: React.FC = () => {
 						cartPriceTotal={
 							otherToppingPriceRight +
 							otherToppingPriceLeft +
-							mainIngredientsPrice
+							crustPrice +
+							sizePrice
 						}
 					/>
 				</View>

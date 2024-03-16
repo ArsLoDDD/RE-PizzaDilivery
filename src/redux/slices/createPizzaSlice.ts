@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IChoseItemPizzaCreate } from '../../components/Main/CreatePizzaContent/CreatePizzaContentFrstStep/CreatePizzaSize/CreatePizzaSize'
-import { addCustomPizzaToCart, addToCart } from './cartSlice'
 
 export enum SizeValue {
 	NULL = 0,
@@ -62,7 +61,6 @@ export interface ICreatePizzaOrder {
 		leftSideToppings?: ToppingSide
 		rightSideToppings?: ToppingSide
 		toppingCount: number
-		mainIngredientsPrice: number
 		otherToppingPriceLeft: number
 		otherToppingPriceRight: number
 	}
@@ -81,7 +79,6 @@ const initialState: ICreatePizzaOrder = {
 		},
 		toppingStyle: ToppingStyle.FIRST,
 		toppingCount: 0,
-		mainIngredientsPrice: 0,
 		otherToppingPriceLeft: 0,
 		otherToppingPriceRight: 0,
 	},
@@ -95,8 +92,6 @@ const createPizzaSlice = createSlice({
 			console.log(action.payload)
 			state.createdPizza.size.sizeValue = action.payload
 			state.createdPizza.size.sizePrice = action.payload
-			state.createdPizza.mainIngredientsPrice +=
-				state.createdPizza.size.sizePrice
 		},
 		setSizeName: (state, action: PayloadAction<string>) => {
 			state.createdPizza.size.sizeName = action.payload
@@ -105,7 +100,6 @@ const createPizzaSlice = createSlice({
 			state.createdPizza.crust.crustValue = action.payload
 			if (action.payload === CrustValue.ITALIAN) {
 				state.createdPizza.crust.crustPrice = CrustPrice.ITALIAN
-				state.createdPizza.mainIngredientsPrice += CrustPrice.ITALIAN
 			}
 		},
 		setToppingStyle: (state, action: PayloadAction<ToppingStyle>) => {
