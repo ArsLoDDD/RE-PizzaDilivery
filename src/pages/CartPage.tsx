@@ -12,7 +12,7 @@ import { RootState } from '../redux/store'
 import CartListEmpty from '../components/Main/CartList/CartListEmpty/CartListEmpty'
 import CartListItem from '../components/Main/CartList/CartListItem/CartListItem'
 import { useDispatch } from 'react-redux'
-import { sendOrder } from '../redux/slices/cartSlice'
+import { clearCart, sendOrder } from '../redux/slices/cartSlice'
 import CartListCustomPizzaItem from '../components/Main/CartList/CartListItem/CartListCustomPizzaItem/CartListCustomPizzaItem'
 
 const CartPage: React.FC = (): JSX.Element => {
@@ -38,10 +38,13 @@ const CartPage: React.FC = (): JSX.Element => {
 				<CartListItem key={index} item={item} />
 			))}
 			{customPizzas.map((item, index) => (
-				<CartListCustomPizzaItem key={index} data={item} />
+				<CartListCustomPizzaItem key={index} index={index} data={item} />
 			))}
 			<Pressable
-				onPress={() => dispatch(sendOrder())}
+				onPress={() => {
+					dispatch(sendOrder())
+					dispatch(clearCart())
+				}}
 				style={({ pressed }) => [
 					{
 						paddingHorizontal: 20,

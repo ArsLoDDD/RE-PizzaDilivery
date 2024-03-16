@@ -28,6 +28,7 @@ const cartSlice = createSlice({
 	reducers: {
 		clearCart: state => {
 			state.cartItems = []
+			state.customPizzas = []
 			state.cartItemsCount = 0
 			state.cartPriceTotal = 0
 		},
@@ -86,9 +87,6 @@ const cartSlice = createSlice({
 				orderTotalPrice: state.cartPriceTotal,
 			}
 			console.log('Order sent', order)
-			state.cartItems = []
-			state.cartItemsCount = 0
-			state.cartPriceTotal = 0
 		},
 	},
 })
