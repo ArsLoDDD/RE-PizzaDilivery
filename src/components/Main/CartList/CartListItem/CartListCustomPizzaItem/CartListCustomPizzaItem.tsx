@@ -102,7 +102,8 @@ const CartListCustomPizzaItem: React.FC<CartListCustomPizzaItemProps> = ({
 			<View style={styles.priceBox}>
 				<Text style={styles.priceBoxText}>
 					Price: ₴
-					{data.createdPizza.mainIngredientsPrice +
+					{data.createdPizza.crust.crustPrice +
+						data.createdPizza.size.sizePrice +
 						data.createdPizza.otherToppingPriceLeft +
 						data.createdPizza.otherToppingPriceRight}
 				</Text>
