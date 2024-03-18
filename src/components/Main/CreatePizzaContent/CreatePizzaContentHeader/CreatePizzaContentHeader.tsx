@@ -1,4 +1,11 @@
-import { View, ImageBackground, Text, StyleSheet } from 'react-native'
+import {
+	View,
+	ImageBackground,
+	Text,
+	StyleSheet,
+	Platform,
+	useWindowDimensions,
+} from 'react-native'
 import BackStepIcon from './BackStepIcon/BackStepIcon'
 import { useNavigate } from 'react-router'
 import StepBox from './StepBox/StepBox'
@@ -10,10 +17,11 @@ const CreatePizzaContentHeader: React.FC<CreatePizzaContentHeaderProps> = ({
 	step,
 	setStep,
 }) => {
+	const { width, height } = useWindowDimensions()
 	return (
 		<View
 			style={{
-				height: 250,
+				height: Platform.OS === 'ios' ? (height < 500 ? 100 : 250) : 110,
 				position: 'relative',
 				display: 'flex',
 				justifyContent: 'center',
@@ -22,7 +30,13 @@ const CreatePizzaContentHeader: React.FC<CreatePizzaContentHeaderProps> = ({
 		>
 			<ImageBackground
 				resizeMode='cover'
-				style={styles.bgImage}
+				style={[
+					styles.bgImage,
+					{
+						height:
+							Platform.OS === 'ios' ? (height < 500 ? '250%' : '100%') : '100%',
+					},
+				]}
 				source={require('../../../../../assets/bgImage/createPizzaBG.png')}
 			/>
 			<StepBox setStep={setStep} step={step} />
@@ -32,7 +46,6 @@ const CreatePizzaContentHeader: React.FC<CreatePizzaContentHeaderProps> = ({
 const styles = StyleSheet.create({
 	bgImage: {
 		width: '100%',
-		height: '100%',
 		position: 'absolute',
 	},
 	stepContainer: {

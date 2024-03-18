@@ -70,7 +70,7 @@ const initialState: ICreatePizzaOrder = {
 	createdPizza: {
 		size: {
 			sizeValue: SizeValue.EXTRA_SMALL,
-			sizePrice: 55.99,
+			sizePrice: 55,
 			sizeName: '7 inch',
 		},
 		crust: {

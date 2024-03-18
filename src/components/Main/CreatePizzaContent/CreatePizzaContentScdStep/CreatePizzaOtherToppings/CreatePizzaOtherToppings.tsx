@@ -9,6 +9,7 @@ import {
 import { ToppingPart } from '../CreatePizzaToppingPart/CreatePizzaToppingPartItem/CreatePizzaToppingPartItem'
 import { CreatePizzaChoseItemSizeEnum } from '../../CreatePizzaChoseItem/CreatePizzaChoseItem'
 import { IToppingStyle } from '../../CreatePizzaContentFrstStep/CreatePizzaToppingStyle/CreatePizzaToppingStyle'
+import { View } from 'react-native'
 const toppings: IChoseItemPizzaCreate[] = [
 	{
 		id: 1,
@@ -119,18 +120,24 @@ const CreatePizzaOtherToppings: React.FC<CreatePizzaSauceProps> = ({
 		}
 	}
 	return (
-		<CreatePizzaChoseBlock
-			itemTypeChose='Choose Toppings'
-			array={toppings}
-			currentItem={
-				currentPart === ToppingPart.LEFT
-					? leftCurrentToping
-					: rightCurrentToping
-			}
-			onClick={handleChoseItem}
-			size={CreatePizzaChoseItemSizeEnum.MEDIUM}
-			customBoxStyle={{ }}
-		/>
+		<View
+			style={{
+				marginBottom: 25,
+			}}
+		>
+			<CreatePizzaChoseBlock
+				itemTypeChose='Choose Toppings'
+				array={toppings}
+				currentItem={
+					currentPart === ToppingPart.LEFT
+						? leftCurrentToping
+						: rightCurrentToping
+				}
+				onClick={handleChoseItem}
+				size={CreatePizzaChoseItemSizeEnum.MEDIUM}
+				customBoxStyle={{}}
+			/>
+		</View>
 	)
 }
 export default CreatePizzaOtherToppings

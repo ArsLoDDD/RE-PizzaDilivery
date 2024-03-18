@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground } from 'react-native'
+import { View, Text, ImageBackground, Platform } from 'react-native'
 import CreatePizzaChoseItem, {
 	CreatePizzaChoseItemSizeEnum,
 } from '../../CreatePizzaChoseItem/CreatePizzaChoseItem'
@@ -68,7 +68,7 @@ const CreatePizzaToppingStyle: React.FC = () => {
 						size={CreatePizzaChoseItemSizeEnum.LARGE}
 						radius={170}
 						isToppingStyle={true}
-						height={180}
+						height={Platform.OS === 'ios' ? 180 : 175}
 						currentItem={currentToppingStyle}
 						onClick={handleChoseItem}
 					>

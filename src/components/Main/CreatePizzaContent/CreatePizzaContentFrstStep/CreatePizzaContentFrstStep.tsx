@@ -1,4 +1,12 @@
-import { Text, View, StyleSheet, Button, Pressable } from 'react-native'
+import {
+	Text,
+	View,
+	StyleSheet,
+	Button,
+	Pressable,
+	Platform,
+	useWindowDimensions,
+} from 'react-native'
 import CreatePizzaSize from './CreatePizzaSize/CreatePizzaSize'
 import CreatePizzaCrust from './CreatePizzaCrust/CreatePizzaCrust'
 import CreatePizzaToppingStyle from './CreatePizzaToppingStyle/CreatePizzaToppingStyle'
@@ -11,18 +19,28 @@ interface CreatePizzaContentFrstStepProps {
 const CreatePizzaContentFrstStep: React.FC<CreatePizzaContentFrstStepProps> = ({
 	setStep,
 }) => {
+	const { width, height } = useWindowDimensions()
 	return (
-		<View style={styles.innerContent}>
+		<View style={[styles.innerContent]}>
 			<Text style={[styles.titletext, styles.marginBottom]}>
 				Create Your Own Pizza
 			</Text>
-			<Text
-				style={[styles.descriptionText, styles.marginBottom, styles.lineHeight]}
-			>
-				Create your own pizza by choosing a crust, sauce and toppings! Select
-				from three crust sizes & thincknesses, choice of sauce over 10
-				individual toppings
-			</Text>
+			{Platform.OS === 'ios' && (
+				<Text
+					style={[
+						styles.descriptionText,
+						styles.marginBottom,
+						styles.lineHeight,
+						{
+							width: height < 500 ? '40%' : '95%',
+						},
+					]}
+				>
+					Create your own pizza by choosing a crust, sauce and toppings! Select
+					from three crust sizes & thincknesses, choice of sauce over 10
+					individual toppings
+				</Text>
+			)}
 			<Text style={[styles.secondDescriptionText, styles.lineHeight]}>
 				Extra toppings for ₴15 each
 			</Text>
@@ -65,7 +83,6 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 	descriptionText: {
-		width: '95%',
 		fontSize: 13,
 		opacity: 0.5,
 	},

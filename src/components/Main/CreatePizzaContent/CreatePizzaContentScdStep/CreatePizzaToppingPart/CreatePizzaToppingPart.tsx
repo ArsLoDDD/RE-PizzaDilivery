@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native'
+import { Platform, Text, View } from 'react-native'
 import CreatePizzaToppingPartItem, {
 	ToppingPart,
 } from './CreatePizzaToppingPartItem/CreatePizzaToppingPartItem'
@@ -35,6 +35,7 @@ const CreatePizzaToppingPart: React.FC<CreatePizzaToppingPartProps> = ({
 						flexDirection: 'row',
 						justifyContent: 'center',
 						alignItems: 'center',
+						gap: Platform.OS === 'ios' ? 0 : 10,
 					}}
 				>
 					<CreatePizzaToppingPartItem

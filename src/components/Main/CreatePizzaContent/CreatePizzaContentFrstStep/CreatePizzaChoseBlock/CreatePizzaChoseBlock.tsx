@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Platform } from 'react-native'
 import CreatePizzaChoseItem, {
 	CreatePizzaChoseItemSizeEnum,
 } from '../../CreatePizzaChoseItem/CreatePizzaChoseItem'
@@ -43,7 +43,15 @@ const CreatePizzaChoseBlock: React.FC<CreatePizzaChoseBlockProps> = ({
 			>
 				{itemTypeChose}
 			</Text>
-			<View style={[styles.containerSize, customBoxStyle]}>
+			<View
+				style={[
+					styles.containerSize,
+					customBoxStyle,
+					{
+						rowGap: Platform.OS === 'ios' ? 25 : 10,
+					},
+				]}
+			>
 				{array.map(item => {
 					const isCurrent = Array.isArray(currentItem)
 						? currentItem.some(ci => ci.id === item.id)
@@ -87,7 +95,6 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		rowGap: 30,
 		justifyContent: 'space-between',
 	},
 })

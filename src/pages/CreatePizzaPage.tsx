@@ -1,14 +1,21 @@
 import { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Platform, ScrollView } from 'react-native'
 import CreatePizzaContentHeader from '../components/Main/CreatePizzaContent/CreatePizzaContentHeader/CreatePizzaContentHeader'
 import CreatePizzaContent from '../components/Main/CreatePizzaContent/CreatePizzaContent'
 
 const CreatePizzaPage: React.FC = () => {
 	const [step, setStep] = useState(1)
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container]}>
 			<CreatePizzaContentHeader step={step} setStep={setStep} />
-			<View style={styles.contentBox}>
+			<View
+				style={[
+					styles.contentBox,
+					{
+						top: Platform.OS === 'ios' ? 190 : 100,
+					},
+				]}
+			>
 				<CreatePizzaContent step={step} setStep={setStep} />
 			</View>
 		</View>
@@ -26,7 +33,7 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		display: 'flex',
 		alignItems: 'center',
-		top: 190,
+
 		left: 0,
 	},
 })
